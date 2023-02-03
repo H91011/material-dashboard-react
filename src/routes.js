@@ -37,8 +37,11 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
+import Orders from "layouts/orders";
+import Settings from "layouts/settings";
 import Billing from "layouts/billing";
+
+import Tables from "layouts/tables";
 import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
@@ -57,14 +60,16 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
+
   {
     type: "collapse",
-    name: "Tables",
-    key: "tables",
-    icon: <Icon fontSize="small">table_view</Icon>,
-    route: "/tables",
-    component: <Tables />,
+    name: "Orders",
+    key: "orders",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/orders",
+    component: <Orders />,
   },
+
   {
     type: "collapse",
     name: "Billing",
@@ -73,6 +78,25 @@ const routes = [
     route: "/billing",
     component: <Billing />,
   },
+
+  {
+    type: "collapse",
+    name: "Settinhgs",
+    key: "settings",
+    icon: <Icon fontSize="small">receipt_long</Icon>,
+    route: "/settings",
+    component: <Settings />,
+  },
+
+  {
+    type: "collapse",
+    name: "Tables",
+    key: "tables",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/tables",
+    component: <Tables />,
+  },
+
   {
     type: "collapse",
     name: "RTL",
