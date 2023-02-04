@@ -32,7 +32,48 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
+import * as yup from "yup";
+import YupPassword from "yup-password";
+
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+
+YupPassword(yup);
+
+const userSchema = yup.object({
+  name: yup.string().required("Name required!"),
+  email: yup.string().email().required("Email required!"),
+  password: yup
+    .string()
+    .min(6, "Min 6 character length!")
+    .minLowercase(1, "At least one lower case!")
+    .minUppercase(1, "At least one upper case!")
+    .required("Password required1"),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords don't match!")
+    .required("ConfirmPassword is required!"),
+  terms: yup
+    .boolean()
+    .required("You need to agree terms!")
+    .oneOf([true], "The terms and conditions must be accepted."),
+});
+
 function Cover() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(userSchema),
+  });
+
+  const singIn = async (data) => {
+    console.log(data);
+  };
+
+  const onError = () => {};
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -57,21 +98,49 @@ function Cover() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="text" label="Name" variant="standard" fullWidth />
+              <MDInput
+                type="text"
+                label="Name"
+                variant="standard"
+                fullWidth
+                error={!!errors?.name}
+                {...register("name")}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" variant="standard" fullWidth />
+              <MDInput
+                type="email"
+                label="Email"
+                variant="standard"
+                fullWidth
+                error={!!errors?.email}
+                {...register("email")}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                variant="standard"
+                fullWidth
+                error={!!errors?.password}
+                {...register("password")}
+              />
             </MDBox>
 
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" variant="standard" fullWidth />
+              <MDInput
+                type="password"
+                label="Password"
+                variant="standard"
+                fullWidth
+                error={!!errors?.confirmPassword}
+                {...register("confirmPassword")}
+              />
             </MDBox>
 
             <MDBox display="flex" alignItems="center" ml={-1}>
-              <Checkbox />
+              <Checkbox {...register("terms")} />
               <MDTypography
                 variant="button"
                 fontWeight="regular"
@@ -91,8 +160,24 @@ function Cover() {
                 Terms and Conditions
               </MDTypography>
             </MDBox>
+
+            <MDBox mt={1} mb={1}>
+              <MDTypography variant="button" color="warning" style={{ fontWeight: "bold" }}>
+                {errors?.name?.message ||
+                  errors?.email?.message ||
+                  errors?.password?.message ||
+                  errors?.confirmPassword?.message ||
+                  errors?.terms?.message}
+              </MDTypography>
+            </MDBox>
+
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton
+                variant="gradient"
+                color="info"
+                fullWidth
+                onClick={handleSubmit(singIn, onError)}
+              >
                 sign in
               </MDButton>
             </MDBox>
