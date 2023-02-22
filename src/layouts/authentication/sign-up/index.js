@@ -48,7 +48,7 @@ const userSchema = yup.object({
     .min(6, "Min 6 character length!")
     .minLowercase(1, "At least one lower case!")
     .minUppercase(1, "At least one upper case!")
-    .required("Password required1"),
+    .required("Password required!"),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref("password"), null], "Passwords don't match!")

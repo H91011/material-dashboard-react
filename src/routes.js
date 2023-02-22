@@ -39,14 +39,14 @@ Coded by www.creative-tim.com
 import Dashboard from "layouts/dashboard";
 import Orders from "layouts/orders";
 import Settings from "layouts/settings";
-import Billing from "layouts/billing";
+// import Billing from "layouts/billing";
 
-import Tables from "layouts/tables";
-import RTL from "layouts/rtl";
+// import Tables from "layouts/tables";
+// import RTL from "layouts/rtl";
 import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
-import SignIn from "layouts/authentication/sign-in";
-import SignUp from "layouts/authentication/sign-up";
+// import SignIn from "layouts/authentication/sign-in";
+// import SignUp from "layouts/authentication/sign-up";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -60,7 +60,6 @@ const routes = [
     route: "/dashboard",
     component: <Dashboard />,
   },
-
   {
     type: "collapse",
     name: "Orders",
@@ -69,23 +68,41 @@ const routes = [
     route: "/orders",
     component: <Orders />,
   },
+  {
+    type: "collapse",
+    name: "Settings",
+    key: "settings",
+    icon: <Icon fontSize="small">settings</Icon>,
+    route: "/settings",
+    component: <Settings />,
+  },
 
   {
+    type: "collapse",
+    name: "Notifications",
+    key: "notifications",
+    icon: <Icon fontSize="small">notifications</Icon>,
+    route: "/notifications",
+    component: <Notifications />,
+  },
+
+  {
+    type: "collapse",
+    name: "Profile",
+    key: "profile",
+    icon: <Icon fontSize="small">person</Icon>,
+    route: "/profile",
+    component: <Profile />,
+  },
+  /*
+
+    {
     type: "collapse",
     name: "Billing",
     key: "billing",
     icon: <Icon fontSize="small">receipt_long</Icon>,
     route: "/billing",
     component: <Billing />,
-  },
-
-  {
-    type: "collapse",
-    name: "Settinhgs",
-    key: "settings",
-    icon: <Icon fontSize="small">receipt_long</Icon>,
-    route: "/settings",
-    component: <Settings />,
   },
 
   {
@@ -105,22 +122,7 @@ const routes = [
     route: "/rtl",
     component: <RTL />,
   },
-  {
-    type: "collapse",
-    name: "Notifications",
-    key: "notifications",
-    icon: <Icon fontSize="small">notifications</Icon>,
-    route: "/notifications",
-    component: <Notifications />,
-  },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    icon: <Icon fontSize="small">person</Icon>,
-    route: "/profile",
-    component: <Profile />,
-  },
+
   {
     type: "collapse",
     name: "Sign In",
@@ -137,6 +139,7 @@ const routes = [
     route: "/authentication/sign-up",
     component: <SignUp />,
   },
+  */
 ];
 
 export default routes;
