@@ -49,8 +49,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import axios from "axios";
 
-import { Alert, Grid } from "@mui/material";
-
 YupPassword(yup);
 
 const userSchema = yup.object({
