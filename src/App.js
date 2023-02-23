@@ -16,7 +16,7 @@ Coded by www.creative-tim.com
 import { useState, useEffect, useMemo } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
 
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
@@ -53,6 +53,10 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
 
+import SignIn from "layouts/authentication/sign-in";
+import SignUp from "layouts/authentication/sign-up";
+import useIsAthorized from "hooks/isAuthorized";
+
 export default function App() {
   const [controller, dispatch] = useMaterialUIController();
   const {
@@ -68,6 +72,8 @@ export default function App() {
   const [onMouseEnter, setOnMouseEnter] = useState(false);
   const [rtlCache, setRtlCache] = useState(null);
   const { pathname } = useLocation();
+
+  const isAuthorized = useIsAthorized();
 
   // Cache for the rtl
   useMemo(() => {
@@ -109,8 +115,22 @@ export default function App() {
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
 
-  const getRoutes = (allRoutes) =>
-    allRoutes.map((route) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthorized) {
+      navigate("/sign-in");
+    }
+  }, [isAuthorized]);
+
+  const getRoutes = (allRoutes) => {
+    if (!isAuthorized) {
+      return [
+        <Route exact path="/sign-in" element={<SignIn />} key={0} />,
+        <Route exact path="/sign-up" element={<SignUp />} key={1} />,
+      ];
+    }
+    return allRoutes.map((route) => {
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
@@ -121,6 +141,9 @@ export default function App() {
 
       return null;
     });
+  };
+
+  console.log("isAuthorized", isAuthorized);
 
   const configsButton = (
     <MDBox
@@ -167,7 +190,11 @@ export default function App() {
         {layout === "vr" && <Configurator />}
         <Routes>
           {getRoutes(routes)}
-          <Route path="*" element={<Navigate to="/dashboard" />} />
+
+          <Route
+            path="*"
+            element={!isAuthorized ? <Navigate to="/sign-in" /> : <Navigate to="/dashboard" />}
+          />
         </Routes>
       </ThemeProvider>
     </CacheProvider>
@@ -191,7 +218,14 @@ export default function App() {
       {layout === "vr" && <Configurator />}
       <Routes>
         {getRoutes(routes)}
-        <Route path="*" element={<Navigate to="/dashboard" />} />
+
+        <Route exact path="/sign-in" element={<SignIn />} />
+        <Route exact path="/sign-up" element={<SignUp />} />
+
+        <Route
+          path="*"
+          element={!isAuthorized ? <Navigate to="/sign-in" /> : <Navigate to="/dashboard" />}
+        />
       </Routes>
     </ThemeProvider>
   );

@@ -48,6 +48,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import axios from "axios";
+import { setAuth } from "store/authSlice";
+import { useDispatch } from "react-redux";
 
 YupPassword(yup);
 
@@ -70,6 +72,7 @@ function Basic() {
   });
 
   const nav = useNavigate();
+  const dispatch = useDispatch();
 
   const signIn = async ({ email, password }) => {
     const login = process.env.REACT_APP_API_LOGIN;
@@ -94,8 +97,7 @@ function Basic() {
         }
       );
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+      dispatch(setAuth({ user, token }));
 
       nav("/dashboard");
     } catch (error) {

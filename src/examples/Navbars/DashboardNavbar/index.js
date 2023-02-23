@@ -30,7 +30,7 @@ import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-import MDInput from "components/MDInput";
+// import MDInput from "components/MDInput";
 
 // Material Dashboard 2 React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -42,21 +42,24 @@ import {
   navbarContainer,
   navbarRow,
   navbarIconButton,
-  navbarMobileMenu,
+  //  navbarMobileMenu,
 } from "examples/Navbars/DashboardNavbar/styles";
 
 // Material Dashboard 2 React context
 import {
   useMaterialUIController,
   setTransparentNavbar,
-  setMiniSidenav,
-  setOpenConfigurator,
+  // setMiniSidenav,
+  // setOpenConfigurator,
 } from "context";
+import { setAuth } from "store/authSlice";
+import { useDispatch } from "react-redux";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator, darkMode } = controller;
+  const { /* miniSidenav, */ transparentNavbar, fixedNavbar, /* openConfigurator, */ darkMode } =
+    controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
 
@@ -86,8 +89,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
   }, [dispatch, fixedNavbar]);
 
-  const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
-  const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
+  // const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
+  // const handleConfiguratorOpen = () => setOpenConfigurator(dispatch, !openConfigurator);
   const handleOpenMenu = (event) => setOpenMenu(event.currentTarget);
   const handleCloseMenu = () => setOpenMenu(false);
 
@@ -123,6 +126,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
     },
   });
 
+  const dispatchRedux = useDispatch();
+
   return (
     <AppBar
       position={absolute ? "absolute" : navbarType}
@@ -135,15 +140,19 @@ function DashboardNavbar({ absolute, light, isMini }) {
         </MDBox>
         {isMini ? null : (
           <MDBox sx={(theme) => navbarRow(theme, { isMini })}>
+            {/* 
             <MDBox pr={1}>
               <MDInput label="Search here" />
             </MDBox>
+        */}
             <MDBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in/basic">
+              <Link to="/profile">
                 <IconButton sx={navbarIconButton} size="small" disableRipple>
                   <Icon sx={iconsStyle}>account_circle</Icon>
                 </IconButton>
               </Link>
+
+              {/*
               <IconButton
                 size="small"
                 disableRipple
@@ -155,7 +164,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              <IconButton
+  <IconButton
                 size="small"
                 disableRipple
                 color="inherit"
@@ -163,7 +172,8 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 onClick={handleConfiguratorOpen}
               >
                 <Icon sx={iconsStyle}>settings</Icon>
-              </IconButton>
+        </IconButton> */}
+
               <IconButton
                 size="small"
                 disableRipple
@@ -176,6 +186,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon sx={iconsStyle}>notifications</Icon>
               </IconButton>
+
+              <IconButton
+                size="small"
+                disableRipple
+                color="inherit"
+                sx={navbarIconButton}
+                aria-controls="notification-menu"
+                aria-haspopup="true"
+                variant="contained"
+                onClick={() => {
+                  dispatchRedux(setAuth({ token: null, user: null }));
+                }}
+              >
+                <Icon sx={iconsStyle}>logout</Icon>
+              </IconButton>
+
               {renderMenu()}
             </MDBox>
           </MDBox>

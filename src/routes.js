@@ -94,6 +94,7 @@ const routes = [
     route: "/profile",
     component: <Profile />,
   },
+
   /*
 
     {
