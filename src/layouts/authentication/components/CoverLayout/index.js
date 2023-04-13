@@ -30,10 +30,11 @@ import PageLayout from "examples/LayoutContainers/PageLayout";
 // Authentication layout components
 import Footer from "layouts/authentication/components/Footer";
 
-function CoverLayout({ coverHeight, image, children }) {
+function CoverLayout({ coverHeight, image, children, hide }) {
   return (
     <PageLayout>
-      <DefaultNavbar transparent light />
+      {!hide && <DefaultNavbar transparent light />}
+
       <MDBox
         width="calc(100% - 2rem)"
         minHeight={coverHeight}
@@ -76,6 +77,7 @@ CoverLayout.propTypes = {
   coverHeight: PropTypes.string,
   image: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  hide: PropTypes.bool.isRequired,
 };
 
 export default CoverLayout;

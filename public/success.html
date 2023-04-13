@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+
+</head>
+<body style="display: flex; justify-content: center; flex-direction: column; align-items: center;">
+
+
+<lottie-player src="https://assets5.lottiefiles.com/packages/lf20_rc5d0f61.json" background="transparent" speed="1"
+    style="width: 300px; height: 300px; text-align: center;" loop autoplay>
+
+
+
+</lottie-player>
+
+<h1>Congratulations. Integration is successful! 
+</h1>
+
+<h3 id ="timer">
+
+
+</h3>
+
+ 
+
+<script>
+    var timer = 4
+    setTimeout(() => {
+        window.close();
+    }, 1000 * 3)
+    const int = setInterval(() => {
+        timer -= 1
+        document.getElementById("timer").innerText = "close after "+ timer+" second."
+        if (timer === 0) {
+            clearInterval(int)
+        }
+    }, 1000);
+</script>
+    
+</body>
+</html>

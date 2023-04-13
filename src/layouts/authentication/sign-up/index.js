@@ -30,7 +30,7 @@ import MDButton from "components/MDButton";
 import CoverLayout from "layouts/authentication/components/CoverLayout";
 
 // Images
-import bgImage from "assets/images/bg-sign-up-cover.jpeg";
+// import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
 import * as yup from "yup";
 import YupPassword from "yup-password";
@@ -75,7 +75,7 @@ function Cover() {
   const onError = () => {};
 
   return (
-    <CoverLayout image={bgImage}>
+    <CoverLayout>
       <Card>
         <MDBox
           variant="gradient"
